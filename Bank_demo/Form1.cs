@@ -13,8 +13,10 @@ namespace Bank_demo
     
     public partial class Form1 : Form
     {
-        public BindingList<Account> _items = new BindingList<Account>();
-        public BindingList<Account> _items2 = new BindingList<Account>();
+        public BindingList<IAccount> _items = new BindingList<IAccount>();
+        public BindingList<IAccount> _items2 = new BindingList<IAccount>();
+        IAccount acc;
+        AccountFactory factory = new AccountFactory();
 
 
         public Form1()
@@ -26,6 +28,8 @@ namespace Bank_demo
         private void Form1_Load_1(object sender, EventArgs e)
         {
             initializeListOfAccounts();
+           
+
             listBox1.DataSource = _items;
             
             listBox1.DisplayMember = "FullAccountInfo";
@@ -40,8 +44,8 @@ namespace Bank_demo
         #region Initialize List of Accounts
         public void initializeListOfAccounts()
         {
-            _items = new BindingList<Account>();
-            _items2 = new BindingList<Account>(_items);
+            _items = new BindingList<IAccount>();
+            _items2 = new BindingList<IAccount>(_items);
 
             // Allow new parts to be added, but not removed once committed.        
             _items.AllowNew = true;
@@ -59,9 +63,9 @@ namespace Bank_demo
             _items2.AllowEdit = true;
 
             //Add objects to the list
-            _items.Add(new Account("Saving", 123455));
-            _items.Add(new Account("Private", 5000000));
-            _items.Add(new Account("Budget", 15000));
+            _items.Add(factory.GetAccount("saving"));
+            _items.Add(factory.GetAccount("budget"));
+            _items.Add(factory.GetAccount("private"));
         }
 
         #endregion
@@ -77,7 +81,7 @@ namespace Bank_demo
                 //get the selected Account-object.
                 var thisObj = _items.ElementAt(selectedAccount);
 
-            string money = thisObj.Money.ToString();
+            //string money = thisObj.Money.ToString();
             //Update label with text
             
            
@@ -92,9 +96,9 @@ namespace Bank_demo
             //Ask user for AccountName
             string input = Microsoft.VisualBasic.Interaction.InputBox("Enter new accountname ", "Create new account ", "Default", 500, 300);
             //Create a new Account obj with Name = input, Money = 0;  
-            Account accNew = new Account(input, 0); 
+            //Account accNew = new Account(input, 0); 
             //Add the new obj to list. 
-            _items.Add(accNew);
+            //_items.Add(accNew);
             _items.ResetBindings();
             _items2.ResetBindings(); 
 
@@ -134,7 +138,7 @@ namespace Bank_demo
             string name = Microsoft.VisualBasic.Interaction.InputBox("Enter new name ", "Create new account ", "Default", 500, 300);
 
 
-            thisObj.changeName(thisObj, name);
+           // thisObj.changeName(thisObj, name);
             _items.ResetBindings();
             _items2.ResetBindings();
           
@@ -234,21 +238,21 @@ namespace Bank_demo
 
             int money = Converter();
 
-            if (fromObj.Money >= money)
-            {
-                fromObj.Transfer(toObj, money);
+            //if (fromObj.Money >= money)
+            //{
+            //    fromObj.Transfer(toObj, money);
 
-                TransferLabel.Text = "Money sent!";
+            //    TransferLabel.Text = "Money sent!";
                 
-                _items.ResetBindings();
-                _items2.ResetBindings();
+            //    _items.ResetBindings();
+            //    _items2.ResetBindings();
 
 
-            }
-            else
-            {
-                TransferLabel.Text = "ERROR! Not enough money!";            
-            }
+            //}
+            //else
+            //{
+            //    TransferLabel.Text = "ERROR! Not enough money!";            
+            //}
 
 
         }
