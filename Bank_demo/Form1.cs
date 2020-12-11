@@ -94,13 +94,12 @@ namespace Bank_demo
         private void newAccButton_Click(object sender, EventArgs e)
         {
             //Ask user for AccountName
-            string input = Microsoft.VisualBasic.Interaction.InputBox("Enter new accountname ", "Create new account ", "Default", 500, 300);
-            //Create a new Account obj with Name = input, Money = 0;  
-            //Account accNew = new Account(input, 0); 
-            //Add the new obj to list. 
-            //_items.Add(accNew);
+            //string inputName = Microsoft.VisualBasic.Interaction.InputBox("Enter new accountname ", "Create new account ", "Default", 500, 300);
+            string inputAccount = Microsoft.VisualBasic.Interaction.InputBox("Enter type of account: Saving, Budget, Private ", "Create new account ", "Default", 500, 300);
+            
+            _items.Add(factory.GetAccount(inputAccount));
             _items.ResetBindings();
-            _items2.ResetBindings(); 
+            _items2.ResetBindings();
 
 
         }
