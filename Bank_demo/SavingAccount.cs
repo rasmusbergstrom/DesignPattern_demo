@@ -8,23 +8,38 @@ namespace Bank_demo
 {
     public class SavingAccount : IAccount
     {
-        public string Name { get; set; }
-        public int Money { get; set; }
-        public string Type = "Saving";
-
-        public void Withdraw(int sum)
+        public SavingAccount()
         {
-            throw new NotImplementedException();
+            accName = "Your Saving account";
+            Money = 0;
+            Type = "Saving";
+        }
+        public string accName;
+        public decimal Money { get; set; }
+        public string Type {get; set; }
+
+        public string Name
+        {
+            get
+            {
+                return accName;
+            }
+            set
+            {
+                accName = value;
+            }
+        }
+  
+        public string ReadMoney()
+        {
+            return this.Money.ToString();      
         }
 
-        public void Transfer(IAccount transferTo, int money)
+        public string ReadName()
         {
-            throw new NotImplementedException();
+            return this.accName.ToString();
         }
 
-        public void Despoit(int sum)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

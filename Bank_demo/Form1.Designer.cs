@@ -43,6 +43,10 @@
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.transfer_2 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.infoLabel = new System.Windows.Forms.Label();
+            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.undoButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.accountBindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -136,22 +140,21 @@
             // 
             this.TransferLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.TransferLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TransferLabel.Location = new System.Drawing.Point(181, 327);
+            this.TransferLabel.Location = new System.Drawing.Point(67, 327);
             this.TransferLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TransferLabel.Name = "TransferLabel";
-            this.TransferLabel.Size = new System.Drawing.Size(242, 31);
+            this.TransferLabel.Size = new System.Drawing.Size(256, 92);
             this.TransferLabel.TabIndex = 12;
             // 
             // listBox2
             // 
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(413, 98);
+            this.listBox2.Location = new System.Drawing.Point(413, 97);
             this.listBox2.Margin = new System.Windows.Forms.Padding(2);
             this.listBox2.Name = "listBox2";
             this.listBox2.Size = new System.Drawing.Size(168, 69);
             this.listBox2.TabIndex = 13;
             this.listBox2.Visible = false;
-            this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
             // transfer_2
             // 
@@ -160,13 +163,13 @@
             this.transfer_2.Name = "transfer_2";
             this.transfer_2.Size = new System.Drawing.Size(122, 31);
             this.transfer_2.TabIndex = 14;
-            this.transfer_2.Text = "TransferNew";
+            this.transfer_2.Text = "Transfer";
             this.transfer_2.UseVisualStyleBackColor = true;
             this.transfer_2.Click += new System.EventHandler(this.transfer_2_Click);
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(451, 177);
+            this.button6.Location = new System.Drawing.Point(451, 173);
             this.button6.Margin = new System.Windows.Forms.Padding(2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(78, 31);
@@ -176,11 +179,52 @@
             this.button6.Visible = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // infoLabel
+            // 
+            this.infoLabel.Location = new System.Drawing.Point(413, 81);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(168, 16);
+            this.infoLabel.TabIndex = 16;
+            this.infoLabel.Text = "Choose account:";
+            this.infoLabel.Visible = false;
+            // 
+            // listBox3
+            // 
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(413, 304);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(168, 82);
+            this.listBox3.TabIndex = 17;
+            this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
+            // 
+            // undoButton
+            // 
+            this.undoButton.Location = new System.Drawing.Point(438, 392);
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(116, 23);
+            this.undoButton.TabIndex = 18;
+            this.undoButton.Text = "Undo transaction";
+            this.undoButton.UseVisualStyleBackColor = true;
+            this.undoButton.Click += new System.EventHandler(this.undoButton_Click);
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(413, 258);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(158, 44);
+            this.label1.TabIndex = 19;
+            this.label1.Text = "Pending transactions - Deposit money and the transaction will succeed, or undo";
+    
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(627, 428);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.undoButton);
+            this.Controls.Add(this.listBox3);
+            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.transfer_2);
             this.Controls.Add(this.listBox2);
@@ -219,6 +263,10 @@
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Button transfer_2;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Label infoLabel;
+        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.Button undoButton;
+        private System.Windows.Forms.Label label1;
     }
 }
 

@@ -10,29 +10,40 @@ namespace Bank_demo
     {
         public PrivateAccount()
         {
-
+            Name = "Your private account";
+            Money = 0;
+            Type = "Private";
         }
-        public string Name { get; set; }
-        public int Money { get; set; }
+        public string accName { get; set; }
+        public decimal Money { get; set; }
 
-        public string Type = "Private";
+        public string Type { get; set; }
+
+        public string Name
+        {
+            get
+            {
+                return accName;
+            }
+            set
+            {
+                accName = value;
+            }
+        }
+
+
 
   
-
-        public void Withdraw(int amount)
+        public string ReadMoney()
         {
-            Money -= amount;
-            Console.WriteLine("Money withdrawed: {0}. Total money on account: {0}", amount, this.Money);
+            return this.Money.ToString();
         }
 
-        public void Transfer(IAccount transferTo, int money)
+        public string ReadName()
         {
-            throw new NotImplementedException();
+            return this.accName.ToString();
         }
 
-        public void Despoit(int sum)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

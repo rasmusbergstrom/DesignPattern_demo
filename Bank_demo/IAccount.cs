@@ -2,9 +2,13 @@
 {
     public interface IAccount
     {
-       public void Withdraw(int sum);
-       public  void Transfer(IAccount transferTo, int money);
-       public  void Despoit(int sum);
+        public string Name { get; set; }
+        public decimal Money { get; set; }
+        public string Type { get; set; }
+     
+
+        public string ReadMoney();
+        public string ReadName();
 
         
     }

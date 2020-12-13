@@ -9,30 +9,38 @@ namespace Bank_demo
  
         public class BudgetAccount : IAccount
         {
-            public string Name { get; set; }
-            public int Money { get; set; }
-            public string Type = "Budget";
-            public void Add(int amount)
-            {
-                Money += amount;
-                Console.WriteLine("Money added by: {0}. Total money on account: {0}", amount, this.Money);
-            }
+      
+            public string accName { get; set; }
+            public decimal Money { get; set; }
+            public string Type { get; set; }
+          
+        public BudgetAccount()
+        {
+            Name = "Your budget account";
+            Money = 0;
+            Type = "Budget";
+        }
 
-
-            public void Withdraw(int amount)
+        public string Name
+        {
+            get
             {
-                Money -= amount;
-                Console.WriteLine("Money withdrawed: {0}. Total money on account: {0}", amount, this.Money);
+                return accName;
             }
-
-            public void Despoit(int sum)
+            set
             {
-                throw new NotImplementedException();
+                accName = value;
             }
+        }
 
-            public void Transfer(IAccount transferTo, int money)
-            {
-                throw new NotImplementedException();
-            }
+        public string ReadMoney()
+        {
+            return this.Money.ToString();
+        }
+
+        public string ReadName()
+        {
+            return this.accName.ToString();
+        }
     }
 }

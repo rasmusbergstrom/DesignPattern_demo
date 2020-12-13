@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,10 +14,13 @@ namespace Bank_demo
     
     public partial class Form1 : Form
     {
+        
         public BindingList<IAccount> _items = new BindingList<IAccount>();
         public BindingList<IAccount> _items2 = new BindingList<IAccount>();
-        IAccount acc;
+        public BindingList<ITransaction> pending = new BindingList<ITransaction>();
+       
         AccountFactory factory = new AccountFactory();
+        
 
 
         public Form1()
@@ -32,11 +36,16 @@ namespace Bank_demo
 
             listBox1.DataSource = _items;
             
-            listBox1.DisplayMember = "FullAccountInfo";
+            listBox1.DisplayMember = "Name";
 
             listBox2.DataSource = _items2;
 
-            listBox2.DisplayMember = "AccountName";
+            listBox2.DisplayMember = "Type";
+
+            listBox3.DataSource = pending;
+
+            listBox3.DisplayMember = "Name";
+           
         }
         #endregion
 
@@ -46,6 +55,8 @@ namespace Bank_demo
         {
             _items = new BindingList<IAccount>();
             _items2 = new BindingList<IAccount>(_items);
+            var myList = factory.PendingTransaction();
+            pending = new BindingList<ITransaction>(myList);
 
             // Allow new parts to be added, but not removed once committed.        
             _items.AllowNew = true;
@@ -74,27 +85,22 @@ namespace Bank_demo
         #region SELECT-Button
         private void button1_Click(object sender, EventArgs e)
         {
-      
                 //Find the index from the list
                 int selectedAccount = listBox1.SelectedIndex;
                 
                 //get the selected Account-object.
                 var thisObj = _items.ElementAt(selectedAccount);
 
-            //string money = thisObj.Money.ToString();
-            //Update label with text
-            
+           TransferLabel.Text = factory.ReadMoney(thisObj);
            
         }
 
         #endregion
 
-
         #region NEW ACCOUNT-Button
         private void newAccButton_Click(object sender, EventArgs e)
         {
-            //Ask user for AccountName
-            //string inputName = Microsoft.VisualBasic.Interaction.InputBox("Enter new accountname ", "Create new account ", "Default", 500, 300);
+           
             string inputAccount = Microsoft.VisualBasic.Interaction.InputBox("Enter type of account: Saving, Budget, Private ", "Create new account ", "Default", 500, 300);
             
             _items.Add(factory.GetAccount(inputAccount));
@@ -105,7 +111,6 @@ namespace Bank_demo
         }
 
         #endregion
-
 
         #region REMOVE-Button
         private void RemoveButtom_Click(object sender, EventArgs e)
@@ -125,19 +130,14 @@ namespace Bank_demo
         }
         #endregion
 
-
-
-
-
         #region RENAME
         private void button2_Click(object sender, EventArgs e)
         {
             int selectedAccount = listBox1.SelectedIndex;
             var thisObj = _items.ElementAt(selectedAccount);
             string name = Microsoft.VisualBasic.Interaction.InputBox("Enter new name ", "Create new account ", "Default", 500, 300);
-
-
-           // thisObj.changeName(thisObj, name);
+            var nameChanged = factory.Rename(thisObj, name);
+            TransferLabel.Text = nameChanged;
             _items.ResetBindings();
             _items2.ResetBindings();
           
@@ -151,10 +151,12 @@ namespace Bank_demo
             int value = Converter();
             int selectedAccount = listBox1.SelectedIndex;
             var thisObj = _items.ElementAt(selectedAccount);
-
-            thisObj.Despoit(value);
+            var message = factory.Deposit(thisObj, value);
+            TransferLabel.Text = message; 
+          
             _items.ResetBindings();
             _items2.ResetBindings();
+            pending.ResetBindings();
 
 
         }
@@ -169,15 +171,13 @@ namespace Bank_demo
             int selectedAccount = listBox1.SelectedIndex;
             var thisObj = _items.ElementAt(selectedAccount);
 
-            thisObj.Withdraw(value);
+            string outprint = factory.Withdraw(thisObj, value);
+            TransferLabel.Text = outprint;
             _items.ResetBindings();
             _items2.ResetBindings();
-
-        }
-
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            pending.ResetBindings();
             
+
         }
         #endregion
 
@@ -204,11 +204,6 @@ namespace Bank_demo
   
         #endregion
 
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         //Set transfer-list visible
         private void transfer_2_Click(object sender, EventArgs e)
         {
@@ -217,11 +212,13 @@ namespace Bank_demo
             {
                 listBox2.Visible = true;
                 button6.Visible = true;
+                infoLabel.Visible = true;
             }
             else
             {
                 listBox2.Visible = false;
                 button6.Visible = false;
+                infoLabel.Visible = false;
             }
         }
         //Transfer money to this account 
@@ -236,28 +233,33 @@ namespace Bank_demo
             var toObj = _items.ElementAt(selectedAccount2);
 
             int money = Converter();
-
-            //if (fromObj.Money >= money)
-            //{
-            //    fromObj.Transfer(toObj, money);
-
-            //    TransferLabel.Text = "Money sent!";
-                
-            //    _items.ResetBindings();
-            //    _items2.ResetBindings();
-
-
-            //}
-            //else
-            //{
-            //    TransferLabel.Text = "ERROR! Not enough money!";            
-            //}
+            var message = factory.Transfer(fromObj, toObj, money);
+            pending.ResetBindings();
+            TransferLabel.Text = message;
 
 
         }
+
+        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void undoButton_Click(object sender, EventArgs e)
+        {
+            int selectedAccount = listBox3.SelectedIndex;
+            factory.UndoTransaction(selectedAccount);
+            _items.ResetBindings();
+            _items2.ResetBindings();
+            pending.ResetBindings();
+
+        }
+
+       
+    }
     }
 
-}
+
 
         
     
